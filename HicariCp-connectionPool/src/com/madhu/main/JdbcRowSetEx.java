@@ -3,9 +3,11 @@ package com.madhu.main;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import javax.sound.midi.Soundbank;
 import javax.sql.rowset.JdbcRowSet;
 import javax.sql.rowset.RowSetFactory;
 import javax.sql.rowset.RowSetProvider;
+import javax.swing.table.TableStringConverter;
 
 public class JdbcRowSetEx {
 
@@ -50,10 +52,22 @@ jdbcRowSet.setUrl("jdbc:mysql:///student");
 		jdbcRowSet.relative(2);
 		System.out.println("id\tname\tage\taddress");
 		System.out.println(jdbcRowSet.getInt(1)+"\t"+jdbcRowSet.getString(2)+"\t"+jdbcRowSet.getInt(3)+"\t"+jdbcRowSet.getString(4));
-		
+		jdbcRowSet.beforeFirst();
+		//updating a record
+		while(jdbcRowSet.next()) {
+			if(jdbcRowSet.getInt(3)>45) {
+				String cityString = "Delhi";
+				jdbcRowSet.updateString(4, cityString);
+				jdbcRowSet.updateRow();
+				System.out.println("record updated...");
+			}
+		}
+		jdbcRowSet.absolute(2);
+		jdbcRowSet.deleteRow();
 		
 		//inserting a record....
-		Scanner scanner= new Scanner(System.in);
+		//insert a row
+		/*Scanner scanner= new Scanner(System.in);
 		System.out.println("enter id...");
 	int id = scanner.nextInt();
 	System.out.println("enter name...");
@@ -63,14 +77,16 @@ jdbcRowSet.setUrl("jdbc:mysql:///student");
 	System.out.println("enter addres...");
 	String addres= scanner.next();
 	
-	jdbcRowSet.moveToInsertRow();
+	/*jdbcRowSet.moveToInsertRow();
 	jdbcRowSet.updateInt(1, id);
 	jdbcRowSet.updateString(2, name);
 	jdbcRowSet.updateInt(3, age);
 	jdbcRowSet.updateString(4, addres);
 	
 	jdbcRowSet.insertRow();
-	System.out.println("Record inserted successfully...");
+	System.out.println("Record inserted successfully...");*/
+	//update
+	
 	}
 
 }
